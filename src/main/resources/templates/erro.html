@@ -10,7 +10,8 @@
     <main>
       <a href="/home">&#9666; Home</a>
       <h1>Erro</h1>
-      <p>Infelizmente um erro aconteceu!</p>
+      <!-- Se msg é null, usa a mensagem padrão -->
+      <p th:text="${msg} ?: 'Um erro interno aconteceu.'"></p>
     </main>
     <script src="/js/main.js"></script>
   </body>

@@ -12,7 +12,32 @@
       <h1>Clientes</h1>
       <p>Lista de clientes.</p>
       <hr />
-      <!-- Tabela de Clientes -->
+      <table>
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Email</th>
+            <th>Telefone</th>
+            <th>Excluir</th>
+            <th>Editar</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Na tag que se repete aplique th:each -->
+          <tr th:each="cliente : ${listaClientes}">
+            <td>
+              <a 
+                th:href="'/clientes/'+${cliente.idCliente}" 
+                th:text="${cliente.nome}">
+              </a>
+            </td>
+            <td th:text="${cliente.email}"></td>
+            <td th:text="${cliente.telefone}"></td>
+            <td><button>Excluir</button></td>
+            <td><button>Editar</button></td>
+          </tr>
+        </tbody>
+      </table>
       <!-- Formulário de Novo Cliente-->
     </main>
     <script src="/js/main.js"></script>

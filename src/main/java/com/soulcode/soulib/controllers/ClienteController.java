@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.soulcode.soulib.models.Cliente;
@@ -38,8 +40,8 @@ public class ClienteController {
     public ModelAndView paginaDetalheCliente(@PathVariable Integer id) {
         // @PathVariable = extrai da rota o valor correspondente
         Optional<Cliente> clienteOpt = clienteRepository.findById(id);
-        
-        if(clienteOpt.isPresent()) { // caso exista
+
+        if (clienteOpt.isPresent()) { // caso exista
             Cliente cliente = clienteOpt.get(); // pega o objeto do cliente encontrado
             ModelAndView mv = new ModelAndView("cliente-detalhe");
             mv.addObject("cliente", cliente);
@@ -49,6 +51,35 @@ public class ClienteController {
             mvErro.addObject("msg", "O cliente não foi encontrado.");
             return mvErro;
         }
+    }
+
+    @PostMapping("/clientes/delete") // action, method, name
+    public String deleteCliente(@RequestParam Integer id) { // GET-POST-REDIRECT
+        // @RequestParam no POST = vai procurar o valor com o nome determinado
+        try {
+            clienteRepository.deleteById(id);
+        } catch (Exception e) {
+            // Em caso de algum problema mostra a página de erro
+            return "erro";
+        }
+
+        // Redireciona o usuário para a lista de clientes
+        // após a remoção feita com sucesso
+        return "redirect:/clientes";
+    }
+
+    @PostMapping("/clientes/create")
+    public String createCliente(Cliente cliente) {
+        // monta o objeto de acordo com os dados vindos
+        // do formulário de requisição (corpo)
+
+        try {
+            clienteRepository.save(cliente);
+        } catch (Exception ex) {
+            return "erro";
+        }
+
+        return "redirect:/clientes";
     }
 }
 

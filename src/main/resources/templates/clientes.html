@@ -33,12 +33,31 @@
             </td>
             <td th:text="${cliente.email}"></td>
             <td th:text="${cliente.telefone}"></td>
-            <td><button>Excluir</button></td>
+            <td>
+              <form action="/clientes/delete" method="post">
+                <input type="hidden" name="id" th:value="${cliente.idCliente}"/>
+                <button type="submit">Excluir</button>
+              </form>
+            </td>
             <td><button>Editar</button></td>
           </tr>
         </tbody>
       </table>
-      <!-- Formulário de Novo Cliente-->
+      <hr />
+      <h2>Novo Cliente</h2>
+      <form action="/clientes/create" method="post">
+        <!-- Na inserção, atente-se para os campos do Model -->
+        <label for="nome">Nome <span style="color: red">*</span></label>
+        <input type="text" name="nome" id="nome" maxlength="100" required/>
+
+        <label for="telefone">Telefone <span style="color: red">*</span></label>
+        <input type="tel" name="telefone" id="telefone" maxlength="42" required/>
+
+        <label for="email">Email</label>
+        <input type="email" name="email" id="email" maxlength="120"/>
+
+        <button type="submit">Enviar</button>
+      </form>
     </main>
     <script src="/js/main.js"></script>
   </body>

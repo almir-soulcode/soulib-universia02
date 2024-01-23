@@ -39,7 +39,11 @@
                 <button type="submit">Excluir</button>
               </form>
             </td>
-            <td><button>Editar</button></td>
+            <td>
+              <a th:href="'/clientes/'+${cliente.idCliente}+'/edit'">
+                <button>Editar</button>
+              </a>
+            </td>
           </tr>
         </tbody>
       </table>

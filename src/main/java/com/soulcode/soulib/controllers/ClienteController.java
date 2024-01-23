@@ -81,6 +81,41 @@ public class ClienteController {
 
         return "redirect:/clientes";
     }
+
+    @GetMapping("/clientes/{id}/edit")
+    public ModelAndView paginaAtualizarCliente(@PathVariable Integer id) {
+        Optional<Cliente> clienteOpt = clienteRepository.findById(id);
+
+        if(clienteOpt.isPresent()) { // Cliente encontrado?
+            Cliente cliente = clienteOpt.get();
+            ModelAndView mv = new ModelAndView("cliente-atualizar");
+            mv.addObject("cliente", cliente);
+            return mv;
+        } else {
+            ModelAndView mvErro = new ModelAndView("erro");
+            mvErro.addObject("msg", "Cliente não encontrado. Impossível de editar.");
+            return mvErro;
+        }
+    }
+
+    @PostMapping("/clientes/update")
+    public String updateCliente(Cliente cliente) {
+        // Na ação de atualizar, o ID do cliente atual será enviado junto.
+        try {
+            Optional<Cliente> clienteOpt = clienteRepository.findById(cliente.getIdCliente());
+
+            if(clienteOpt.isPresent()) {
+                // Antes de efetuar a operação, será checado o campo ID.
+                // Se houver um valor, será executado update, se não houver
+                // será executado um create.
+                clienteRepository.save(cliente);
+            }
+        } catch(Exception ex) {
+            return "erro";
+        }
+
+        return "redirect:/clientes";
+    }
 }
 
 // Template Engine (thymeleaf) = recurso para gerar as páginas

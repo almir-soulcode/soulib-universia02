@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Empréstimos</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+  </head>
+  <body>
+    <main>
+      <a href="/emprestimos">&#9666; Voltar</a>
+
+      <h1>Editar Empréstimo</h1>
+      <hr />
+      <form action="/emprestimos/update" method="post">
+        <input
+          type="hidden"
+          name="idEmprestimo"
+          th:value="${emp.idEmprestimo}"
+        />
+
+        <label for="livro">Livro<span style="color: red">*</span></label>
+        <select
+          name="idLivro"
+          id="livro"
+          th:value="${emp.livroEmprestado.idLivro}"
+          required
+        >
+          <option th:each="livro : ${livros}" th:value="${livro.idLivro}">
+            <span th:text="${livro.titulo}"></span> -
+            <span th:text="${livro.autor}"></span>
+          </option>
+        </select>
+
+        <label for="cliente">Cliente<span style="color: red">*</span></label>
+        <select
+          name="idCliente"
+          id="cliente"
+          th:value="${emp.cliente.idCliente}"
+          required
+        >
+          <option
+            th:each="cliente : ${clientes}"
+            th:value="${cliente.idCliente}"
+          >
+            <span th:text="${cliente.nome}"></span> -
+            <span th:text="${cliente.email}"></span>
+          </option>
+        </select>
+
+        <label for="dataRealizada"
+          >Data Realizada<span style="color: red">*</span></label
+        >
+        <input
+          type="date"
+          name="dataRealizada"
+          id="dataRealizada"
+          th:value="${emp.dataRealizada}"
+          required
+        />
+
+        <label for="dataDevolucao"
+          >Data Devolução<span style="color: red">*</span></label
+        >
+        <input
+          type="date"
+          name="dataDevolucao"
+          id="dataDevolucao"
+          th:value="${emp.dataDevolucao}"
+          required
+        />
+
+        <label for="finalizado"
+          ><input
+            type="checkbox"
+            name="finalizado"
+            id="finalizado"
+            th:checked="${emp.finalizado}"
+          />Finalizado?</label
+        >
+
+        <button>Enviar</button>
+      </form>
+    </main>
+    <script src="/js/main.js"></script>
+  </body>
+</html>

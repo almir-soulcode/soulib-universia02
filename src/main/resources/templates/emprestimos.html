@@ -9,7 +9,45 @@
   <body>
     <main>
       <a href="/">&#9666; Home</a>
-      <!-- Tabela de empréstimos -->
+      <h1>Empréstimos</h1>
+      <p>Registros de empréstimos.</p>
+      <hr />
+
+      <table>
+        <tr>
+          <th>Livro</th>
+          <th>Cliente</th>
+          <th>Data Realizada</th>
+          <th>Data Devolução</th>
+          <th>Finalizada?</th>
+          <th>Excluir</th>
+          <th>Editar</th>
+        </tr>
+        <tbody>
+          <tr th:each="emp : ${listaEmprestimos}">
+            <td th:text="${emp.livroEmprestado.titulo}"></td>
+            <td th:text="${emp.cliente.nome}"></td>
+            <td th:text="${emp.dataRealizada}"></td>
+            <td th:text="${emp.dataDevolucao}"></td>
+            <td th:text="${emp.finalizado} ? 'SIM' : 'NÃO'"></td>
+            <td>
+              <form action="/emprestimos/delete" method="post">
+                <input
+                  type="hidden"
+                  name="idEmprestimo"
+                  th:value="${emp.idEmprestimo}"
+                />
+                <button>Excluir</button>
+              </form>
+            </td>
+            <td>
+              <a th:href="'/emprestimos/'+${emp.idEmprestimo}+'/edit'">
+                <button>Editar</button>
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
       <hr />
       <h2>Novo Empréstimo</h2>
       <form action="/emprestimos/create" method="post">
